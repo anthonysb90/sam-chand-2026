@@ -41,17 +41,24 @@
     .loader-inner { display: flex; flex-direction: column; align-items: center; gap: 22px; }
     .loader-line {
       width: 0; height: 1px; background: var(--gold);
-      animation: loaderLine 0.6s ease forwards 0.1s;
+      animation: loaderLine 0.5s ease forwards 0.6s;
     }
     @keyframes loaderLine { to { width: 220px; } }
     .loader-text {
       font-family: var(--font-title); font-size: 10px; letter-spacing: 0.45em;
       color: var(--gold); text-transform: uppercase;
-      opacity: 0; animation: fadeIn 0.3s ease 0.4s forwards;
+      opacity: 0; animation: fadeIn 0.35s ease 0.2s forwards;
     }
-    .loader-event {
-      font-family: var(--font-display); font-size: 36px; font-weight: 400;
-      color: var(--text); opacity: 0; animation: fadeIn 0.5s ease 0.8s forwards;
+    .loader-name {
+      font-family: var(--font-display); font-size: clamp(56px, 10vw, 96px);
+      font-weight: 400; color: var(--text); line-height: 1;
+      letter-spacing: 0.02em;
+      opacity: 0; animation: fadeIn 0.5s ease 0.9s forwards;
+    }
+    .loader-sub {
+      font-family: var(--font-title); font-size: 11px; letter-spacing: 0.3em;
+      color: var(--text-secondary); text-transform: uppercase;
+      opacity: 0; animation: fadeIn 0.4s ease 1.3s forwards;
     }
     @keyframes fadeIn { to { opacity: 1; } }
 
@@ -643,4 +650,6 @@
       .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
       .gallery-item img { height: 160px; }
     }
+    /* ── Reservation Form Section ── */
+    .reservation-form-section { padding: 80px 0; background: var(--bg-surface); }
 
