@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
     setTimeout(() => {
       document.getElementById("loader").classList.add("hidden");
       runHeroAnimation();
-    }, 1800);
+    }, 700);
   });
 
   // HERO ENTRANCE
