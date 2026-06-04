@@ -445,16 +445,25 @@
     }
     .hotel-row:last-child { border-bottom: none; }
     .hotel-row-label { color: var(--text); font-weight: 500; min-width: 110px; flex-shrink: 0; }
-    .hotel-cta-group { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
-    .hotel-btn {
-      display: inline-block; font-family: var(--font-body);
-      font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--bg-deep); background: var(--gold); padding: 16px 36px;
-      text-decoration: none; text-align: center; transition: background 0.2s;
+    .hotel-reserve-note {
+      margin-top: 36px;
+      padding: 24px 28px;
+      border-left: 3px solid var(--gold-dim);
+      background: var(--bg-surface);
     }
-    .hotel-btn:hover { background: var(--gold-light); }
-    .hotel-note { font-size: 13px; color: var(--text-muted); }
-    .hotel-note strong { color: var(--gold); }
+    .hotel-reserve-note p {
+      font-size: 15px; line-height: 1.75; color: var(--text-secondary);
+      margin: 0 0 18px;
+    }
+    .hotel-form-link {
+      display: inline-block; font-family: var(--font-body);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 3px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hotel-form-link:hover { color: var(--gold-light); border-color: var(--gold); }
     .amenities-label {
       font-family: var(--font-title); font-size: 10px;
       letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
