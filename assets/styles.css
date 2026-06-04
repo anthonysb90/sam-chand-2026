@@ -75,6 +75,19 @@
       transition: background 0.2s ease;
     }
     .nav-cta:hover { background: var(--gold-light); }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+    }
+    .nav-link {
+      font-family: var(--font-body); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-secondary); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--gold); }
+    .nav-right { display: flex; align-items: center; }
+    .hamburger { display: none; }
+    
 
     /* HERO */
     .hero {
@@ -115,7 +128,7 @@
       filter: brightness(0) invert(1); opacity: 0.7;
       transition: opacity 0.3s;
     }
-    .hero-logo-item.ipcc img { height: 46px; }
+    .hero-logo-item.ipcc img { height: 46px; filter: none; opacity: 0.9; }
     .hero-logo-item.cgma img { filter: none; opacity: 0.8; height: 34px; }
     .hero-logo-item img:hover { opacity: 1; }
     .hero-divider {
@@ -502,6 +515,35 @@
       section { padding: 72px 24px; }
       nav { padding: 0 24px; }
       .nav-brand { display: none; }
+    .nav-links {
+      display: none;
+      position: fixed; top: 72px; left: 0; right: 0;
+      background: rgba(5,8,16,0.97);
+      border-bottom: 1px solid var(--gold-border);
+      backdrop-filter: blur(16px);
+      flex-direction: column; padding: 16px 24px 24px;
+      gap: 0; z-index: 999;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links .nav-link {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      font-size: 13px;
+    }
+    .nav-links .nav-link:last-child { border-bottom: none; }
+    .hamburger {
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 5px; background: none; border: none; cursor: pointer;
+      padding: 8px; margin-right: 12px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       .value-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
