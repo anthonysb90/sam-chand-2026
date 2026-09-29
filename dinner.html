@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participants' Dinner | October 21, 2026 | Graniteville, SC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script
+    src="https://app.rybbit.io/api/script.js"
+    data-site-id="40519751ca93"
+    defer
+  ></script>
+  <style>
+    /* DINNER PAGE */
+    .dinner-hero {
+      position: relative; width: 100%; min-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 140px 24px 100px;
+    }
+    .dinner-hero-bg {
+      position: absolute; inset: -20px; z-index: 0;
+      background: url("assets/cromwell-building.jpg") center 60% / cover no-repeat;
+      filter: blur(2px) saturate(0.9);
+      transform: scale(1.04);
+    }
+    .dinner-hero .hero-overlay {
+      background: linear-gradient(180deg,
+        rgba(5,8,16,0.72) 0%,
+        rgba(5,8,16,0.66) 45%,
+        rgba(5,8,16,0.9) 82%,
+        rgba(5,8,16,1) 100%
+      );
+    }
+    .dinner-hero .hero-title-main { font-size: clamp(60px, 11vw, 124px); }
+    .dinner-hero .hero-divider { width: 80px; }
+    .dinner-hero-meta-row {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 12px 36px; margin: 6px 0 40px;
+    }
+    .dinner-hero-meta-item {
+      font-family: var(--font-title); font-size: 11px;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--text);
+    }
+    .dinner-hero-meta-item span { color: var(--gold); margin-right: 10px; }
+
+    .dinner-letter { background: var(--bg-surface); }
+    .dinner-letter-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+    .dinner-letter-quote {
+      font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 40px);
+      font-style: italic; font-weight: 400; line-height: 1.4; color: var(--text);
+    }
+    .dinner-letter-body {
+      font-size: 16px; line-height: 1.8; color: var(--text-secondary);
+      max-width: 600px; margin: 28px auto 0;
+    }
+
+    .dinner-photo-frame { position: relative; }
+    .dinner-photo-frame::before {
+      content: ""; position: absolute;
+      top: -18px; left: -18px; right: 18px; bottom: 18px;
+      border: 1px solid var(--gold-border); z-index: 0;
+    }
+    .dinner-photo {
+      width: 100%; aspect-ratio: 603 / 391; object-fit: cover;
+      display: block; position: relative; z-index: 1;
+      box-shadow: 0 28px 64px rgba(0,0,0,0.5);
+    }
+    .dinner-photo-caption {
+      font-family: var(--font-title); font-size: 10px; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--text-muted); margin-top: 18px;
+    }
+    .dinner-venue .hotel-grid { align-items: center; }
+
+    .dinner-back {
+      display: inline-block; margin-top: 36px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim); padding-bottom: 3px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .dinner-back:hover { color: var(--gold-light); border-color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .dinner-hero { min-height: 80vh; padding: 120px 20px 80px; }
+      .dinner-hero-meta-row { flex-direction: column; gap: 12px; }
+      .dinner-photo-frame::before { top: -10px; left: -10px; right: 10px; bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <a href="index.html" class="nav-brand">A Day with Sam Chand</a>
+  <div class="nav-links" id="nav-links">
+    <a href="#details" class="nav-link">Details</a>
+    <a href="#location" class="nav-link">Location</a>
+    <a href="index.html" class="nav-link">Main Event</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#rsvp" class="nav-cta">RSVP</a>
+  </div>
+</nav>
+
+<section class="dinner-hero" id="hero">
+  <div class="dinner-hero-bg" aria-hidden="true"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <div class="hero-meta">You Are Invited</div>
+    <div class="hero-divider"></div>
+    <div class="hero-title-pre">An Evening Before the Roundtable</div>
+    <div class="hero-title-main">Dinner</div>
+    <div class="hero-subtitle">A Sit-Down Dinner for All Participants</div>
+    <div class="dinner-hero-meta-row">
+      <div class="dinner-hero-meta-item"><span>&#9670;</span>Wednesday, October 21</div>
+      <div class="dinner-hero-meta-item"><span>&#9670;</span>7:15 PM</div>
+      <div class="dinner-hero-meta-item"><span>&#9670;</span>Graniteville, SC</div>
+    </div>
+    <a href="#rsvp" class="hero-cta"><span>RSVP for Dinner</span></a>
+  </div>
+</section>
+
+<section class="dinner-letter" id="details">
+  <div class="dinner-letter-inner">
+    <span class="section-label reveal">Why We Gather</span>
+    <p class="dinner-letter-quote reveal">
+      A table is where strangers become friends. We want you to meet the people you will sit beside before the work begins.
+    </p>
+    <div class="section-divider reveal" style="margin:36px auto 0;"></div>
+    <p class="dinner-letter-body reveal">
+      On the evening of October 21, all Roundtable participants are invited to a sit-down dinner. It is a chance to get to know one another, share a meal, and set the tone for our day together on October 22.
+    </p>
+  </div>
+</section>
+
+<section class="value-section">
+  <div class="section-inner">
+    <span class="section-label reveal">The Details</span>
+    <h2 class="section-title reveal">Your Evening at a Glance</h2>
+    <div class="section-divider reveal"></div>
+    <div class="value-grid">
+      <div class="value-card reveal">
+        <span class="value-number">01</span>
+        <span class="value-icon">&#128197;</span>
+        <h3 class="value-title">Wednesday,<br>October 21, 2026</h3>
+        <p class="value-body">The evening before the Roundtable on Thursday, October 22.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-number">02</span>
+        <span class="value-icon">&#127869;</span>
+        <h3 class="value-title">Dinner at<br>7:15 PM</h3>
+        <p class="value-body">A seated dinner with fellow participants. Please plan to arrive a few minutes early.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-number">03</span>
+        <span class="value-icon">&#128205;</span>
+        <h3 class="value-title">Cromwell Building<br>Gregg Park</h3>
+        <p class="value-body">About 5 minutes from Christian Heritage Church, where we meet the next morning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hotel dinner-venue" id="location">
+  <div class="section-inner">
+    <span class="section-label reveal">Where We Dine</span>
+    <h2 class="section-title reveal">The Location</h2>
+    <div class="section-divider reveal"></div>
+    <div class="hotel-grid">
+      <div class="reveal-left">
+        <div class="dinner-photo-frame">
+          <img class="dinner-photo" src="assets/cromwell-building.jpg" alt="The Cromwell Building at Gregg Park Civic Center, lit at dusk">
+        </div>
+        <div class="dinner-photo-caption">The Cromwell Building &middot; Gregg Park Civic Center</div>
+      </div>
+      <div class="reveal-right">
+        <div class="hotel-name">Gregg Park Civic Center<br>Cromwell Building</div>
+        <div class="hotel-address">1001 A Avenue &nbsp;&middot;&nbsp; Graniteville, SC 29829</div>
+        <div class="hotel-rows">
+          <div class="hotel-row"><span class="hotel-row-label">Date</span><span>Wednesday, October 21, 2026</span></div>
+          <div class="hotel-row"><span class="hotel-row-label">Dinner</span><span>7:15 PM</span></div>
+          <div class="hotel-row"><span class="hotel-row-label">Drive to CHC</span><span>About 5 minutes</span></div>
+        </div>
+        <div class="hotel-reserve-note">
+          <p>Logistical arrangements for the evening have been made by Pastor Stephen Phillips.</p>
+          <a class="hotel-form-link" href="https://maps.google.com/?q=1001+A+Avenue,+Graniteville,+SC+29829" target="_blank" rel="noopener">Get Directions &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="registration" id="rsvp">
+  <div class="section-inner">
+    <span class="section-label reveal">RSVP</span>
+    <h2 class="section-title reveal">Save Your Seat at the Table</h2>
+    <div class="section-divider reveal" style="margin:20px auto 22px;"></div>
+    <p class="reg-lead reveal">Please let us know if you will join us so we can plan seating and the meal.</p>
+    <div class="reg-deadline reveal">
+      <span>&#9670;</span> Wednesday, October 21 &middot; 7:15 PM
+    </div>
+    <div class="reg-form-wrap reveal">
+      <script type="text/javascript" src="https://form.jotform.com/jsform/262714665479066"></script>
+    </div>
+    <a href="index.html" class="dinner-back">&larr; Back to A Day with Sam Chand</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-col-label">The Dinner</div>
+        <div class="footer-event-name">Participants&rsquo;<br>Dinner</div>
+        <div class="footer-text">
+          Wednesday, October 21, 2026 &nbsp;&middot;&nbsp; 7:15 PM<br>
+          Gregg Park Civic Center &middot; Cromwell Building<br>
+          1001 A Avenue<br>
+          Graniteville, South Carolina 29829
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-label">Questions?</div>
+        <div class="footer-text">
+          Anthony Baumann<br>
+          <a href="mailto:anthony@chchurch.com">anthony@chchurch.com</a><br>
+          <a href="tel:7702284833">(770) 228-4833</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-label">Presented By</div>
+        <div class="footer-logos-grid">
+          <div class="footer-logo-box"><img class="white-filter" src="assets/chc-logo.png" alt="CHC"></div>
+          <div class="footer-logo-box"><img src="assets/pfwb-logo.png" alt="PFWB" style="height:22px;"></div>
+          <div class="footer-logo-box"><img src="assets/ipcc-logo.png" alt="IPCC"></div>
+          <div class="footer-logo-box"><img src="assets/cgma-logo.png" alt="CGMA"></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 &nbsp;&middot;&nbsp; All Rights Reserved</div>
+      <div class="footer-tag">By Invitation Only</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // HERO ENTRANCE
+  gsap.from(".dinner-hero .hero-content > *", {
+    opacity: 0, y: 20, duration: 0.7, stagger: 0.12, ease: "power3.out", delay: 0.15
+  });
+
+  // NAV SCROLL
+  const nav = document.getElementById("main-nav");
+  ScrollTrigger.create({
+    start: "top -60",
+    onUpdate: self => nav.classList.toggle("scrolled", self.progress > 0)
+  });
+
+  // REVEAL on scroll
+  const revealFrom = { ".reveal": { y: 44 }, ".reveal-left": { x: -64 }, ".reveal-right": { x: 64 } };
+  Object.entries(revealFrom).forEach(([sel, from]) => {
+    gsap.utils.toArray(sel).forEach(el => {
+      gsap.fromTo(el, { opacity: 0, ...from },
+        { opacity: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 86%", once: true } });
+    });
+  });
+
+  // SMOOTH SCROLL
+  document.querySelectorAll("a[href^='#']").forEach(a => {
+    a.addEventListener("click", e => {
+      const target = document.querySelector(a.getAttribute("href"));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    });
+  });
+
+  // HAMBURGER MENU
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("open");
+    navLinks.classList.toggle("open");
+  });
+  navLinks.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("open");
+      navLinks.classList.remove("open");
+    });
+  });
+  document.addEventListener("click", e => {
+    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+      hamburger.classList.remove("open");
+      navLinks.classList.remove("open");
+    }
+  });
+</script>
+</body>
+</html>
