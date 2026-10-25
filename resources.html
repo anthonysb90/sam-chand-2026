@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Resources | A Day with Sam Chand</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script
+    src="https://app.rybbit.io/api/script.js"
+    data-site-id="40519751ca93"
+    defer
+  ></script>
+  <style>
+    /* GATE */
+    #gate {
+      position: fixed; inset: 0; z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px 16px; overflow-y: auto;
+      background:
+        linear-gradient(180deg, rgba(5,8,16,0.86) 0%, rgba(5,8,16,0.94) 100%),
+        url("assets/gallery-3.jpg") center / cover no-repeat;
+    }
+    body.unlocked #gate { display: none; }
+    body:not(.unlocked) { overflow: hidden; }
+    body:not(.unlocked) #content { display: none; }
+
+    .gate-card {
+      width: 100%; max-width: 480px; margin: auto;
+      background: var(--bg-card); border: 1px solid var(--gold-border);
+      padding: 48px 40px; text-align: center;
+      box-shadow: 0 28px 64px rgba(0,0,0,0.55);
+    }
+    .gate-card .section-divider { margin: 22px auto 24px; }
+    .gate-title {
+      font-family: var(--font-display); font-size: clamp(34px, 6vw, 46px);
+      font-weight: 500; line-height: 1.08; color: var(--text);
+    }
+    .gate-lead { font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 30px; }
+    .gate-form { text-align: left; display: grid; gap: 18px; }
+    .gate-field label {
+      display: block; font-family: var(--font-title); font-size: 10px;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+    }
+    .gate-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .gate-field input {
+      width: 100%; padding: 13px 14px; font: inherit; font-size: 16px;
+      color: var(--text); background: var(--bg-deep);
+      border: 1px solid var(--gold-border); border-radius: 0; outline: none;
+      transition: border-color 0.2s;
+    }
+    .gate-field input:focus { border-color: var(--gold); }
+    .gate-field input[aria-invalid="true"] { border-color: #d36b5e; }
+    .gate-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .gate-submit {
+      margin-top: 8px; width: 100%; padding: 16px; cursor: pointer;
+      font-family: var(--font-body); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--bg-deep); background: var(--gold); border: none;
+      transition: background 0.2s;
+    }
+    .gate-submit:hover { background: var(--gold-light); }
+    .gate-submit:disabled { opacity: 0.6; cursor: wait; }
+    .gate-error { min-height: 20px; font-size: 14px; color: #e08a7e; text-align: center; }
+    .gate-fine { font-size: 12px; color: var(--text-muted); margin-top: 18px; line-height: 1.6; }
+
+    /* PAGE HERO */
+    .res-hero {
+      position: relative; padding: 170px 24px 90px; text-align: center; overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(5,8,16,0.7) 0%, rgba(5,8,16,0.92) 75%, var(--bg-deep) 100%),
+        url("assets/gallery-2.jpg") center 40% / cover no-repeat;
+    }
+    .res-hero .hero-title-main { font-size: clamp(54px, 10vw, 112px); }
+    .res-hero .hero-divider { margin: 22px auto; width: 80px; }
+    .res-hero .hero-subtitle { margin-bottom: 34px; }
+    .res-jump { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    .res-jump a {
+      font-family: var(--font-title); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text); text-decoration: none; padding: 10px 18px;
+      border: 1px solid var(--gold-border); background: rgba(5,8,16,0.55);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .res-jump a:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    /* SESSIONS */
+    .sessions { background: var(--bg-deep); }
+    .session {
+      border: 1px solid var(--gold-border); background: var(--bg-card);
+      padding: 44px; margin-top: 48px; scroll-margin-top: 90px;
+    }
+    .session-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; }
+    .session-num { font-family: var(--font-title); font-size: 12px; letter-spacing: 0.32em; color: var(--gold); text-transform: uppercase; }
+    .session-title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 42px); font-weight: 500; line-height: 1.1; }
+    .session-summary { color: var(--text-secondary); font-size: 16px; line-height: 1.75; max-width: 760px; margin: 10px 0 28px; }
+    .video-frame { position: relative; aspect-ratio: 16 / 9; background: var(--bg-deep); border: 1px solid var(--gold-border); }
+    .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video-soon {
+      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      font-family: var(--font-title); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-secondary);
+    }
+    .video-soon span { font-size: 30px; color: var(--gold); letter-spacing: 0; }
+
+    .session-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 36px; }
+    .block-label { font-family: var(--font-title); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: block; }
+    .notes-list { list-style: none; display: grid; gap: 12px; }
+    .notes-list li { position: relative; padding-left: 22px; color: var(--text); font-size: 15px; line-height: 1.65; }
+    .notes-list li::before { content: "\25C6"; position: absolute; left: 0; top: 1px; font-size: 10px; color: var(--gold); }
+    .muted { color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .transcript { border: 1px solid var(--gold-border); background: var(--bg-deep); }
+    .transcript summary {
+      cursor: pointer; padding: 14px 18px; list-style: none;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .transcript summary::-webkit-details-marker { display: none; }
+    .transcript summary::after { content: "+"; color: var(--gold); font-size: 20px; font-weight: 400; }
+    .transcript[open] summary::after { content: "\2212"; }
+    .transcript-body {
+      max-height: 420px; overflow-y: auto; padding: 4px 18px 20px;
+      color: var(--text-secondary); font-size: 15px; line-height: 1.8; white-space: pre-line;
+    }
+    .session-links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; }
+
+    /* GIFTS */
+    .gifts { background: var(--bg-surface); text-align: center; }
+    .gifts .section-divider { margin: 0 auto 22px; }
+    .gifts-lead { color: var(--text-secondary); font-size: 16px; line-height: 1.7; max-width: 560px; margin: 0 auto 52px; }
+    .gift-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: left; }
+    .gift-card { background: var(--bg-card); border: 1px solid var(--gold-border); padding: 32px 26px; display: flex; flex-direction: column; }
+    .gift-card .value-number { margin-bottom: 14px; }
+    .gift-title { font-family: var(--font-display); font-size: 26px; font-weight: 500; line-height: 1.15; margin-bottom: 12px; }
+    .gift-body { color: var(--text-secondary); font-size: 15px; line-height: 1.7; flex: 1; margin-bottom: 22px; }
+    .gift-card .hotel-form-link { align-self: flex-start; }
+    .site-cta { margin-top: 64px; }
+
+    @media (max-width: 1000px) { .gift-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 768px) {
+      .session { padding: 26px 18px; }
+      .session-cols { grid-template-columns: 1fr; gap: 28px; }
+      .gift-grid { grid-template-columns: 1fr; }
+      .gate-card { padding: 36px 22px; }
+      .gate-row { grid-template-columns: 1fr; }
+      .res-hero { padding: 130px 16px 70px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ACCESS GATE -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="gate-card">
+    <span class="section-label">A Day with Sam Chand</span>
+    <h1 class="gate-title" id="gate-title">Session Resources</h1>
+    <div class="section-divider"></div>
+    <p class="gate-lead">Videos, transcripts, and notes from our day together, plus Dr. Chand&rsquo;s gifts for every pastor. Enter your information to unlock the page.</p>
+    <form class="gate-form" id="gate-form" novalidate>
+      <div class="gate-row">
+        <div class="gate-field">
+          <label for="g-first">First Name</label>
+          <input id="g-first" name="first" autocomplete="given-name" required>
+        </div>
+        <div class="gate-field">
+          <label for="g-last">Last Name</label>
+          <input id="g-last" name="last" autocomplete="family-name" required>
+        </div>
+      </div>
+      <div class="gate-field">
+        <label for="g-email">Email</label>
+        <input id="g-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="gate-field">
+        <label for="g-phone">Phone Number</label>
+        <input id="g-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(555) 555-5555" required>
+      </div>
+      <div class="gate-hp" aria-hidden="true">
+        <label for="g-website">Website</label>
+        <input id="g-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <div class="gate-error" id="gate-error" role="alert"></div>
+      <button class="gate-submit" type="submit" id="gate-submit">Unlock the Resources</button>
+    </form>
+    <p class="gate-fine">We will only use your information to follow up about this event and future leadership resources.</p>
+  </div>
+</div>
+
+<div id="content">
+<nav id="main-nav">
+  <a href="index.html" class="nav-brand">A Day with Sam Chand</a>
+  <div class="nav-links" id="nav-links">
+    <a href="#sessions" class="nav-link">Sessions</a>
+    <a href="#gifts" class="nav-link">Gifts</a>
+    <a href="index.html" class="nav-link">Main Event</a>
+  </div>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#gifts" class="nav-cta">Your Gifts</a>
+  </div>
+</nav>
+
+<section class="res-hero">
+  <div class="hero-meta">October 22, 2026 &nbsp;&middot;&nbsp; Graniteville, SC</div>
+  <div class="hero-divider"></div>
+  <div class="hero-title-pre">A Day with Sam Chand</div>
+  <div class="hero-title-main">Resources</div>
+  <div class="hero-subtitle">Watch, Read, and Revisit Every Session</div>
+  <div class="res-jump" id="res-jump"></div>
+</section>
+
+<section class="sessions" id="sessions">
+  <div class="section-inner">
+    <span class="section-label">The Sessions</span>
+    <h2 class="section-title">Watch &amp; Review</h2>
+    <div class="section-divider"></div>
+    <div id="session-list"></div>
+  </div>
+</section>
+
+<section class="gifts" id="gifts">
+  <div class="section-inner">
+    <span class="section-label">From Dr. Chand</span>
+    <h2 class="section-title">Four Gifts for Every Pastor</h2>
+    <div class="section-divider"></div>
+    <p class="gifts-lead">Dr. Chand is giving these resources to every pastor who attended. Take them, use them, and share them with your team.</p>
+    <div class="gift-grid" id="gift-grid"></div>
+    <div class="site-cta">
+      <a class="hero-cta" id="site-link" href="#" target="_blank" rel="noopener"><span>Visit SamChand.com</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-col-label">The Event</div>
+        <div class="footer-event-name">A Day with<br>Sam Chand</div>
+        <div class="footer-text">
+          Thursday, October 22, 2026<br>
+          Christian Heritage Church<br>
+          Graniteville, South Carolina
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-label">Questions?</div>
+        <div class="footer-text">
+          Anthony Baumann<br>
+          <a href="mailto:anthony@chchurch.com">anthony@chchurch.com</a><br>
+          <a href="tel:7702284833">(770) 228-4833</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-label">Presented By</div>
+        <div class="footer-logos-grid">
+          <div class="footer-logo-box"><img class="white-filter" src="assets/chc-logo.png" alt="CHC"></div>
+          <div class="footer-logo-box"><img src="assets/pfwb-logo.png" alt="PFWB" style="height:22px;"></div>
+          <div class="footer-logo-box"><img src="assets/ipcc-logo.png" alt="IPCC"></div>
+          <div class="footer-logo-box"><img src="assets/cgma-logo.png" alt="CGMA"></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 &nbsp;&middot;&nbsp; All Rights Reserved</div>
+      <div class="footer-tag">For Event Participants</div>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script>
+  /* ==========================================================
+     EDIT YOUR CONTENT HERE
+     - youtubeId: the code after "v=" in the YouTube link
+       (https://www.youtube.com/watch?v=THIS_PART). Leave "" to show "Coming Soon".
+     - notes: one line per bullet.
+     - transcript: paste the full text between the backticks ` `.
+     - downloads: optional links, e.g. a PDF of the slides or notes.
+     - To use 3 sessions instead of 4, delete one { ... } block.
+     ========================================================== */
+  const SAM_WEBSITE = "https://samchand.com";
+
+  const SESSIONS = [
+    {
+      title: "Morning Session",
+      summary: "Dr. Chand's opening teaching on the invisible limits that keep a church from its next level.",
+      youtubeId: "",
+      notes: [
+        "Add key takeaway #1 here.",
+        "Add key takeaway #2 here.",
+        "Add key takeaway #3 here."
+      ],
+      transcript: ``,
+      downloads: [
+        // { label: "Session Notes (PDF)", url: "https://..." }
+      ]
+    },
+    {
+      title: "Session Two",
+      summary: "Add a one or two sentence summary of this session.",
+      youtubeId: "",
+      notes: [],
+      transcript: ``,
+      downloads: []
+    },
+    {
+      title: "Afternoon Session",
+      summary: "Continued teaching with extended time for Q&A and practical application.",
+      youtubeId: "",
+      notes: [],
+      transcript: ``,
+      downloads: []
+    },
+    {
+      title: "Q&A with Dr. Chand",
+      summary: "Add a one or two sentence summary of this session.",
+      youtubeId: "",
+      notes: [],
+      transcript: ``,
+      downloads: []
+    }
+  ];
+
+  const GIFTS = [
+    { title: "Gift One",   description: "Describe the first gift and how a pastor can use it.",  url: "https://samchand.com", button: "Claim Gift" },
+    { title: "Gift Two",   description: "Describe the second gift and how a pastor can use it.", url: "https://samchand.com", button: "Claim Gift" },
+    { title: "Gift Three", description: "Describe the third gift and how a pastor can use it.",  url: "https://samchand.com", button: "Claim Gift" },
+    { title: "Gift Four",  description: "Describe the fourth gift and how a pastor can use it.", url: "https://samchand.com", button: "Claim Gift" }
+  ];
+  /* ================= END OF CONTENT ================= */
+
+  // Sign-ups are saved to this Jotform form (view them in Jotform > Submissions).
+  const JOTFORM_ID = "262968534188069";
+  const ACCESS_KEY = "samchand2026-resources-access";
+
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const pad = n => String(n).padStart(2, "0");
+
+  function renderContent() {
+    document.getElementById("res-jump").innerHTML = SESSIONS.map((s, i) =>
+      `<a href="#session-${i + 1}">${pad(i + 1)} &middot; ${esc(s.title)}</a>`).join("") +
+      `<a href="#gifts">Gifts</a>`;
+
+    document.getElementById("session-list").innerHTML = SESSIONS.map((s, i) => {
+      const video = s.youtubeId
+        ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(s.youtubeId)}?rel=0" title="${esc(s.title)}" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        : `<div class="video-soon"><span>&#9654;</span>Video Coming Soon</div>`;
+      const notes = s.notes && s.notes.length
+        ? `<ul class="notes-list">${s.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>`
+        : `<p class="muted">Notes coming soon.</p>`;
+      const transcript = s.transcript && s.transcript.trim()
+        ? `<details class="transcript"><summary>Read the Full Transcript</summary><div class="transcript-body">${esc(s.transcript.trim())}</div></details>`
+        : `<p class="muted">Transcript coming soon.</p>`;
+      const downloads = s.downloads && s.downloads.length
+        ? `<div class="session-links">${s.downloads.map(d => `<a class="hotel-form-link" href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.label)} &rarr;</a>`).join("")}</div>`
+        : "";
+      return `
+        <article class="session" id="session-${i + 1}">
+          <div class="session-head">
+            <span class="session-num">Session ${pad(i + 1)}</span>
+            <h3 class="session-title">${esc(s.title)}</h3>
+          </div>
+          <p class="session-summary">${esc(s.summary)}</p>
+          <div class="video-frame">${video}</div>
+          <div class="session-cols">
+            <div><span class="block-label">Key Notes</span>${notes}${downloads}</div>
+            <div><span class="block-label">Transcript</span>${transcript}</div>
+          </div>
+        </article>`;
+    }).join("");
+
+    document.getElementById("gift-grid").innerHTML = GIFTS.map((g, i) => `
+      <div class="gift-card">
+        <span class="value-number">${pad(i + 1)}</span>
+        <h3 class="gift-title">${esc(g.title)}</h3>
+        <p class="gift-body">${esc(g.description)}</p>
+        <a class="hotel-form-link" href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.button || "Claim Gift")} &rarr;</a>
+      </div>`).join("");
+
+    document.getElementById("site-link").href = SAM_WEBSITE;
+  }
+
+  function unlock() {
+    renderContent();
+    document.body.classList.add("unlocked");
+    initPage();
+  }
+
+  // GATE
+  function hasAccess() {
+    try { return localStorage.getItem(ACCESS_KEY) === "1"; } catch (e) { return false; }
+  }
+  function rememberAccess() {
+    try { localStorage.setItem(ACCESS_KEY, "1"); } catch (e) {}
+  }
+  function formatPhone(raw) {
+    const d = raw.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "");
+    return d.length === 10 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : raw.trim();
+  }
+
+  const form = document.getElementById("gate-form");
+  const errorEl = document.getElementById("gate-error");
+  const submitBtn = document.getElementById("gate-submit");
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    errorEl.textContent = "";
+    const f = id => document.getElementById(id);
+    const fields = {
+      first: f("g-first"), last: f("g-last"), email: f("g-email"), phone: f("g-phone")
+    };
+    Object.values(fields).forEach(el => el.removeAttribute("aria-invalid"));
+
+    const bad = [];
+    if (!fields.first.value.trim()) bad.push(fields.first);
+    if (!fields.last.value.trim()) bad.push(fields.last);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(fields.email.value.trim())) bad.push(fields.email);
+    if (fields.phone.value.replace(/\D/g, "").length < 10) bad.push(fields.phone);
+    if (bad.length) {
+      bad.forEach(el => el.setAttribute("aria-invalid", "true"));
+      bad[0].focus();
+      errorEl.textContent = "Please enter your full name, a valid email, and a phone number.";
+      return;
+    }
+    // Bots fill the hidden field; humans never see it.
+    if (f("g-website").value) return;
+
+    const data = new FormData();
+    data.append("formID", JOTFORM_ID);
+    data.append("simple_spc", `${JOTFORM_ID}-${JOTFORM_ID}`);
+    data.append("q2_q2_fullname0[first]", fields.first.value.trim());
+    data.append("q2_q2_fullname0[last]", fields.last.value.trim());
+    data.append("q3_q3_email1", fields.email.value.trim());
+    data.append("q4_q4_phone2[full]", formatPhone(fields.phone.value));
+    data.append("website", "");
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Unlocking...";
+    try {
+      await fetch(`https://submit.jotform.com/submit/${JOTFORM_ID}`, { method: "POST", mode: "no-cors", body: data });
+      rememberAccess();
+      unlock();
+      window.scrollTo(0, 0);
+    } catch (err) {
+      errorEl.textContent = "We could not connect. Please check your internet connection and try again.";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Unlock the Resources";
+    }
+  });
+
+  // PAGE BEHAVIOR (runs after unlock)
+  function initPage() {
+    const nav = document.getElementById("main-nav");
+    const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    document.querySelectorAll("a[href^='#']").forEach(a => {
+      a.addEventListener("click", e => {
+        const target = document.querySelector(a.getAttribute("href"));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      });
+    });
+
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("nav-links");
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("open");
+      navLinks.classList.toggle("open");
+    });
+    navLinks.querySelectorAll(".nav-link").forEach(link => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("open");
+        navLinks.classList.remove("open");
+      });
+    });
+  }
+
+  if (hasAccess()) unlock();
+</script>
+</body>
+</html>
