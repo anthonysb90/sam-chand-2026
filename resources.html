@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
   <script src="assets/attendees.js"></script>
   <script
@@ -159,17 +159,40 @@
     .notes-list li::before { content: "\25C6"; position: absolute; left: 0; top: 1px; font-size: 10px; color: var(--gold); }
     .muted { color: var(--text-muted); font-size: 14px; font-style: italic; }
 
-    /* SAM'S RESOURCES */
+    /* SAM'S RESOURCES (styled after AVAIL's marketing) */
     .gifts { background: var(--bg-surface); text-align: center; }
-    .gifts .section-divider { margin: 0 auto 22px; }
-    .gifts-lead { color: var(--text-secondary); font-size: 16px; line-height: 1.7; max-width: 560px; margin: 0 auto 52px; }
-    .gift-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: left; }
-    .gift-card { background: var(--bg-card); border: 1px solid var(--gold-border); padding: 32px 26px; display: flex; flex-direction: column; }
-    .gift-card .value-number { margin-bottom: 14px; }
-    .gift-title { font-family: var(--font-display); font-size: 26px; font-weight: 500; line-height: 1.15; margin-bottom: 12px; }
-    .gift-body { color: var(--text-secondary); font-size: 15px; line-height: 1.7; flex: 1; margin-bottom: 22px; }
-    .gift-card .hotel-form-link { align-self: flex-start; }
-    .site-cta { margin-top: 60px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+    .gifts .section-divider { margin: 0 auto 44px; }
+    .avail {
+      --a-bg: #f6f3ee; --a-ink: #1c1b19; --a-sub: #4a4741; --a-orange: #ef8a2b;
+      display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: center;
+      background: var(--a-bg); color: var(--a-ink); text-align: left;
+      padding: 52px 56px; box-shadow: 0 28px 64px rgba(0,0,0,0.45);
+      font-family: "Inter", var(--font-body);
+    }
+    .avail-brand { display: flex; align-items: center; gap: 22px; margin-bottom: 34px; flex-wrap: wrap; }
+    .avail-brand img { height: 34px; width: auto; }
+    .avail-brand span { font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--a-ink); }
+    .avail-head { font-family: "Playfair Display", serif; font-weight: 400; font-size: clamp(38px, 5vw, 58px); line-height: 1.08; margin-bottom: 34px; }
+    .avail-head em { font-style: normal; color: var(--a-orange); }
+    .avail-list { list-style: none; border-left: 3px solid var(--a-orange); padding-left: 20px; display: grid; gap: 18px; }
+    .avail-list strong { display: block; font-size: 18px; font-weight: 500; }
+    .avail-list span { font-size: 16px; color: var(--a-sub); }
+    .avail-books { display: flex; align-items: center; gap: 14px; margin-top: 30px; }
+    .avail-books p { font-size: 14px; line-height: 1.6; color: var(--a-sub); }
+    .avail-cta { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+    .avail-cta-label { font-size: 17px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+    .avail-covers { display: flex; gap: 18px; justify-content: center; }
+    .avail-covers img { width: 128px; height: auto; box-shadow: 0 14px 30px rgba(0,0,0,0.25); }
+    .avail-covers img:first-child { transform: rotate(-4deg); }
+    .avail-covers img:last-child { transform: rotate(4deg); }
+    .avail-button {
+      display: inline-block; background: var(--a-orange); color: #fff; text-decoration: none;
+      font-weight: 600; font-size: 15px; letter-spacing: 0.04em; padding: 16px 30px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .avail-button:hover { background: #d9761c; transform: translateY(-2px); }
+    .avail-url { font-size: 18px; color: var(--a-ink); text-decoration: underline; text-underline-offset: 4px; }
+    .site-cta { margin-top: 44px; }
 
     /* BETTER TOGETHER AD */
     .conf {
@@ -197,14 +220,16 @@
     .conf-meta span { color: var(--gold); margin-right: 10px; }
 
     @media (max-width: 1000px) {
-      .gift-grid, .download-grid { grid-template-columns: 1fr 1fr; }
+      .download-grid { grid-template-columns: 1fr 1fr; }
+      .avail { grid-template-columns: 1fr; padding: 40px 32px; }
       .download-grid > :first-child { grid-column: 1 / -1; }
       .session-media { grid-template-columns: 1fr; }
       .chapter-list { max-height: 260px; }
     }
     @media (max-width: 768px) {
       .session { padding: 26px 18px; }
-      .gift-grid { grid-template-columns: 1fr; }
+      .avail { padding: 32px 20px; gap: 36px; }
+      .avail-covers img { width: 104px; }
       .gate-card { padding: 36px 22px; }
       .gate-row { grid-template-columns: 1fr; }
       .res-hero { padding: 130px 16px 70px; }
@@ -334,12 +359,31 @@
 <section class="gifts" id="resources">
   <div class="section-inner">
     <span class="section-label">From Dr. Chand</span>
-    <h2 class="section-title" id="res-title"></h2>
+    <h2 class="section-title">Gifts for Every Pastor</h2>
     <div class="section-divider"></div>
-    <p class="gifts-lead" id="res-lead"></p>
-    <div class="gift-grid" id="gift-grid"></div>
+    <div class="avail">
+      <div>
+        <div class="avail-brand">
+          <img src="assets/avail-logo.png" alt="AVAIL">
+          <span>Leadership Resources with Sam Chand</span>
+        </div>
+        <h3 class="avail-head">Lead with more<br><em>clarity.</em></h3>
+        <ul class="avail-list" id="avail-list"></ul>
+        <div class="avail-books">
+          <p>Practical wisdom for wherever you lead.<br>Claim your resources in a few simple steps.</p>
+        </div>
+      </div>
+      <div class="avail-cta">
+        <div class="avail-cta-label">Get Instant Access</div>
+        <div class="avail-covers">
+          <img src="assets/book-voices.jpg" alt="Voices by Sam Chand">
+          <img src="assets/book-chaos.jpg" alt="How Leaders Create Chaos by Sam Chand">
+        </div>
+        <a class="avail-button" id="res-link" href="#" target="_blank" rel="noopener">Claim Your Free Resources &rarr;</a>
+        <a class="avail-url" id="res-url" href="#" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
     <div class="site-cta">
-      <a class="hero-cta" id="res-link" href="#" target="_blank" rel="noopener"><span id="res-button"></span></a>
       <a class="hotel-form-link" id="site-link" href="#" target="_blank" rel="noopener">Visit SamChand.com &rarr;</a>
     </div>
   </div>
@@ -435,18 +479,14 @@
     }
   ];
 
-  // Dr. Chand's resources. Final wording and layout to match his marketing.
+  // Dr. Chand's resources, worded to match AVAIL's flyer.
   const RESOURCES = {
-    title: "Dr. Chand&rsquo;s Gifts for Every Pastor",
-    lead: "Dr. Chand is giving these resources to every pastor. Take them, use them, and share them with your team.",
-    link: "",                        // the main link Sam wants pastors to use
-    button: "Get Your Free Resources",
+    link: "https://theartofleadership.co/sam",
     website: "https://samchand.com",
     items: [
-      { title: "Gift One",   description: "Describe the first gift and how a pastor can use it." },
-      { title: "Gift Two",   description: "Describe the second gift and how a pastor can use it." },
-      { title: "Gift Three", description: "Describe the third gift and how a pastor can use it." },
-      { title: "Gift Four",  description: "Describe the fourth gift and how a pastor can use it." }
+      { title: "Tuesdays with Sam Chand",        description: "Leadership videos delivered to your inbox." },
+      { title: "Sam Chand Leadership Institute", description: "Pay whatever you want. $1,999 program value." },
+      { title: "Two free PDF books",             description: "Voices + How Leaders Create Chaos" }
     ]
   };
 
@@ -523,16 +563,10 @@
         </article>`;
     }).join("");
 
-    $("res-title").innerHTML = RESOURCES.title;
-    $("res-lead").textContent = RESOURCES.lead;
-    $("gift-grid").innerHTML = RESOURCES.items.map((g, i) => `
-      <div class="gift-card">
-        <span class="value-number">${pad(i + 1)}</span>
-        <h3 class="gift-title">${esc(g.title)}</h3>
-        <p class="gift-body">${esc(g.description)}</p>
-      </div>`).join("");
-    $("res-button").textContent = RESOURCES.button;
-    $("res-link").href = RESOURCES.link || RESOURCES.website;
+    $("avail-list").innerHTML = RESOURCES.items.map(g =>
+      `<li><strong>${esc(g.title)}</strong><span>${esc(g.description)}</span></li>`).join("");
+    $("res-link").href = $("res-url").href = RESOURCES.link;
+    $("res-url").textContent = RESOURCES.link.replace(/^https?:\/\//, "");
     $("site-link").href = RESOURCES.website;
 
     $("conf-badge").textContent = CONFERENCE.badge;
