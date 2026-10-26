@@ -1,0 +1,4 @@
+# Raw attendee lists contain personal info. Never commit them.
+*.csv
+*.xlsx
+private/
