@@ -213,6 +213,16 @@
     .avail-url { font-size: 18px; color: var(--a-ink); text-decoration: underline; text-underline-offset: 4px; }
     .site-cta { margin-top: 44px; }
 
+    /* THANK YOU */
+    .thanks { background: var(--bg-deep); text-align: center; }
+    .thanks .section-divider { margin: 0 auto 22px; }
+    .thanks-lead { color: var(--text-secondary); font-size: 16px; line-height: 1.7; max-width: 560px; margin: 0 auto 52px; }
+    .thanks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: left; }
+    .thanks-card { background: var(--bg-card); border: 1px solid var(--gold-border); border-top: 2px solid var(--gold); padding: 36px 30px; }
+    .thanks-for { font-family: var(--font-title); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 12px; }
+    .thanks-name { font-family: var(--font-display); font-size: 30px; font-weight: 500; line-height: 1.12; margin-bottom: 14px; }
+    .thanks-body { color: var(--text-secondary); font-size: 15px; line-height: 1.75; }
+
     /* BETTER TOGETHER SAVE THE DATE */
     .bt {
       position: relative; overflow: hidden; padding: 0;
@@ -264,6 +274,7 @@
       .gate-card { padding: 36px 22px; }
       .gate-row { grid-template-columns: 1fr; }
       .res-hero { padding: 130px 16px 70px; }
+      .thanks-grid { grid-template-columns: 1fr; }
       .bt-inner { padding: 72px 20px 36px; }
       .bt-top { grid-template-columns: 1fr; gap: 36px; }
       .bt-logos { gap: 26px 32px; justify-content: center; }
@@ -387,6 +398,32 @@
   </div>
 </section>
 
+<section class="thanks" id="thanks">
+  <div class="section-inner">
+    <span class="section-label">With Gratitude</span>
+    <h2 class="section-title">Thank You</h2>
+    <div class="section-divider"></div>
+    <p class="thanks-lead">A day like this takes many hands. We are grateful to the people who made it possible.</p>
+    <div class="thanks-grid">
+      <div class="thanks-card">
+        <span class="thanks-for">For Hosting</span>
+        <h3 class="thanks-name">Christian Heritage Church</h3>
+        <p class="thanks-body">Thank you for opening your doors and making every pastor feel at home. Your hospitality set the tone for the whole day.</p>
+      </div>
+      <div class="thanks-card">
+        <span class="thanks-for">For Teaching &amp; Generosity</span>
+        <h3 class="thanks-name">Dr. Sam Chand</h3>
+        <p class="thanks-body">Thank you for pouring decades of wisdom into our room, and for the generous gifts you are giving every pastor.</p>
+      </div>
+      <div class="thanks-card">
+        <span class="thanks-for">For Planning &amp; Leading</span>
+        <h3 class="thanks-name">Rev. Anthony Baumann</h3>
+        <p class="thanks-body">Thank you for planning and executing a spectacular event, and for providing these recordings, resources, notes, and this website.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="bt" id="conference" aria-label="Better Together Leadership Conference 2027">
   <div class="bt-inner">
     <div class="bt-top">
@@ -469,7 +506,7 @@
   const SESSIONS = [
     {
       title: "Session 1",
-      summary: "",
+      summary: "Dr. Sam Chand shares the surprising story behind this gathering. Then he walks through six simple, two-word questions every church needs to ask. You’ll hear why small churches have an edge in raising leaders. You’ll also learn what to do when one voice in the room holds you back.",
       video: "https://www.youtube.com/watch?v=yXfNK1LfEXs",
       timecodes: [
         { time: "0:00:00", label: "Why this day exists: a thank-you text to four bishops" },
@@ -492,7 +529,7 @@
     },
     {
       title: "Session 2",
-      summary: "",
+      summary: "How do you lead a church that doesn’t want to move? Dr. Chand breaks down the five kinds of people who respond to every vision, and shows which ones most pastors listen to by mistake. He also talks honestly about fear, courage, and the kind of friend every pastor needs.",
       video: "https://www.youtube.com/watch?v=ND2wxWnIkVs",
       timecodes: [
         { time: "0:00:00", label: "The question: an established church that won't move forward" },
@@ -512,7 +549,7 @@
     },
     {
       title: "Session 3",
-      summary: "",
+      summary: "Pastors from four denominations name the biggest opportunities ahead. Then Dr. Chand gives the pastor’s job description in three words. He closes with two personal questions every leader must answer, and four words from his mentor that he has never forgotten.",
       video: "https://www.youtube.com/watch?v=F8aH4t50yDc",
       timecodes: [
         { time: "0:01:49", label: "Takeaways from the room; every decision is symbolic" },
