@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/resources", "destination": "/resources.html" },
+    { "source": "/resources/", "destination": "/resources.html" }
+  ]
+}
