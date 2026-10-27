@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
   <script
     src="https://app.rybbit.io/api/script.js"
@@ -214,30 +214,41 @@
     .avail-url { font-size: 18px; color: var(--a-ink); text-decoration: underline; text-underline-offset: 4px; }
     .site-cta { margin-top: 44px; }
 
-    /* BETTER TOGETHER AD */
-    .conf {
-      position: relative; text-align: center; overflow: hidden;
+    /* BETTER TOGETHER SAVE THE DATE */
+    .bt {
+      position: relative; overflow: hidden; padding: 0;
       background:
-        linear-gradient(180deg, rgba(5,8,16,0.82) 0%, rgba(5,8,16,0.9) 100%),
-        url("assets/gallery-1.jpg") center / cover no-repeat;
-      border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border);
+        radial-gradient(ellipse 55% 75% at 78% 8%, rgba(214,122,32,0.78), rgba(150,90,50,0.35) 45%, transparent 75%),
+        linear-gradient(100deg, #0b1222 40%, #141a2c 100%);
+      border-top: 1px solid var(--gold-border);
+      --bt-gold: #f0b443;
     }
-    .conf-inner { max-width: 760px; margin: 0 auto; }
-    .conf-badge {
-      display: inline-block; font-family: var(--font-title); font-size: 10px; letter-spacing: 0.4em;
-      text-transform: uppercase; color: var(--bg-deep); background: var(--gold); padding: 7px 16px; margin-bottom: 26px;
+    .bt-inner { max-width: 1240px; margin: 0 auto; padding: 96px 48px 48px; }
+    .bt-top { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px; align-items: end; }
+    .bt-kicker { font-family: var(--font-body); font-weight: 700; font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--bt-gold); margin-bottom: 18px; }
+    .bt-title { font-family: "Playfair Display", serif; font-weight: 700; font-size: clamp(46px, 6.3vw, 92px); line-height: 1; color: #f4ecdc; letter-spacing: -0.01em; white-space: nowrap; }
+    .bt-date { font-family: "Playfair Display", serif; font-style: italic; font-weight: 600; font-size: clamp(27px, 3.5vw, 52px); line-height: 1.1; color: var(--bt-gold); margin: 20px 0 34px; white-space: nowrap; }
+    .bt-city { font-family: var(--font-body); font-weight: 600; font-size: clamp(20px, 2.2vw, 28px); color: var(--text); }
+    .bt-venue { font-size: clamp(16px, 1.6vw, 20px); color: var(--text); opacity: 0.85; margin-top: 4px; }
+    .bt-reg { font-family: var(--font-body); font-weight: 700; font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--bt-gold); margin-top: 26px; }
+    .bt-art { position: relative; align-self: stretch; display: flex; flex-direction: column; justify-content: flex-end; }
+    .bt-art img {
+      width: 100%; height: auto; display: block;
+      /* Soft oval fade so the art melts into the section's sunset glow, with no hard edges. */
+      -webkit-mask-image: radial-gradient(ellipse 52% 54% at 50% 54%, #000 60%, transparent 100%);
+      mask-image: radial-gradient(ellipse 52% 54% at 50% 54%, #000 60%, transparent 100%);
     }
-    .conf-name {
-      font-family: var(--font-display); font-size: clamp(44px, 8vw, 88px); font-weight: 600; line-height: 0.98;
-      background: linear-gradient(165deg, #ffffff 30%, #c9a84c 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .bt-speakers { display: grid; grid-template-columns: 54% 46%; margin-top: 10px; text-align: center; }
+    .bt-when { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--bt-gold); }
+    .bt-name { font-family: "Playfair Display", serif; font-weight: 700; font-size: clamp(15px, 1.6vw, 23px); white-space: nowrap; color: #f4ecdc; margin-top: 4px; }
+    .bt-bottom {
+      display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+      border-top: 1px solid rgba(240,180,67,0.45); margin-top: 34px; padding-top: 30px;
     }
-    .conf-year { font-family: var(--font-title); font-size: clamp(16px, 2.4vw, 22px); letter-spacing: 0.5em; color: var(--gold); margin-top: 14px; }
-    .conf .section-divider { margin: 28px auto; }
-    .conf-tagline { font-family: var(--font-display); font-style: italic; font-size: clamp(22px, 3vw, 30px); line-height: 1.4; color: var(--text); }
-    .conf-meta { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 36px; margin: 28px 0 38px; }
-    .conf-meta div { font-family: var(--font-title); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text); }
-    .conf-meta span { color: var(--gold); margin-right: 10px; }
+    .bt-tag { font-family: var(--font-body); font-weight: 700; font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--bt-gold); line-height: 1.8; }
+    .bt-logos { display: flex; align-items: center; gap: 44px; flex-wrap: wrap; }
+    .bt-logos img { height: 44px; width: auto; display: block; }
+    .bt-logos .bt-ipcc { height: 64px; }
 
     @media (max-width: 1000px) {
       .download-grid { grid-template-columns: 1fr 1fr; }
@@ -254,7 +265,12 @@
       .gate-card { padding: 36px 22px; }
       .gate-row { grid-template-columns: 1fr; }
       .res-hero { padding: 130px 16px 70px; }
-      .conf-meta { flex-direction: column; gap: 12px; }
+      .bt-inner { padding: 72px 20px 36px; }
+      .bt-top { grid-template-columns: 1fr; gap: 36px; }
+      .bt-logos { gap: 26px 32px; justify-content: center; }
+      .bt-logos img { height: 34px; }
+      .bt-logos .bt-ipcc { height: 50px; }
+      .bt-bottom { justify-content: center; text-align: center; }
     }
     @media (max-width: 420px) { .download-grid { grid-template-columns: 1fr; } }
   </style>
@@ -372,15 +388,34 @@
   </div>
 </section>
 
-<section class="conf" id="conference">
-  <div class="conf-inner">
-    <div class="conf-badge" id="conf-badge"></div>
-    <div class="conf-name" id="conf-name"></div>
-    <div class="conf-year" id="conf-year"></div>
-    <div class="section-divider"></div>
-    <p class="conf-tagline" id="conf-tagline"></p>
-    <div class="conf-meta" id="conf-meta"></div>
-    <a class="hero-cta" id="conf-link" href="#" target="_blank" rel="noopener"><span id="conf-button"></span></a>
+<section class="bt" id="conference" aria-label="Better Together Leadership Conference 2027">
+  <div class="bt-inner">
+    <div class="bt-top">
+      <div>
+        <div class="bt-kicker">Better Together Leadership Conference</div>
+        <h2 class="bt-title">Save the Date</h2>
+        <div class="bt-date">September 23&ndash;24, 2027</div>
+        <div class="bt-city">Pigeon Forge, Tennessee</div>
+        <div class="bt-venue">The Ramsey Hotel &amp; Convention Center</div>
+        <div class="bt-reg">Registration Opens Soon</div>
+      </div>
+      <div class="bt-art">
+        <img src="assets/better-together-speakers.jpg" alt="Bishop Tony Stewart and Pastor Larry Stockstill" loading="lazy">
+        <div class="bt-speakers">
+          <div><div class="bt-when">Thursday Night</div><div class="bt-name">Bishop Tony Stewart</div></div>
+          <div><div class="bt-when">Friday AM &amp; PM</div><div class="bt-name">Pastor Larry Stockstill</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="bt-bottom">
+      <div class="bt-tag">Four Fellowships<br>One Gathering</div>
+      <div class="bt-logos">
+        <img src="assets/pfwb-logo.png" alt="Pentecostal Freewill Baptist Church">
+        <img class="white-filter" src="assets/chc-logo.png" alt="Congregational Holiness Church">
+        <img class="bt-ipcc" src="assets/ipcc-logo.png" alt="International Pentecostal Church of Christ">
+        <img src="assets/cgma-logo.png" alt="Church of God Mountain Assembly">
+      </div>
+    </div>
   </div>
 </section>
 
@@ -513,15 +548,6 @@
     ]
   };
 
-  const CONFERENCE = {
-    badge: "Save the Date",
-    name: "Better Together",
-    year: "Conference 2027",
-    tagline: "Add a one-line invitation for the conference here.",
-    details: ["Dates Coming Soon", "Location Coming Soon"],
-    link: "",                        // registration or info page
-    button: "Learn More"
-  };
   /* ================= END OF CONTENT ================= */
 
   // Sign-ins are saved to this Jotform form (view them in Jotform > Submissions).
@@ -609,14 +635,6 @@
     $("res-url").textContent = RESOURCES.link.replace(/^https?:\/\//, "");
     $("site-link").href = RESOURCES.website;
 
-    $("conf-badge").textContent = CONFERENCE.badge;
-    $("conf-name").textContent = CONFERENCE.name;
-    $("conf-year").textContent = CONFERENCE.year;
-    $("conf-tagline").textContent = CONFERENCE.tagline;
-    $("conf-meta").innerHTML = CONFERENCE.details.map(x => `<div><span>&#9670;</span>${esc(x)}</div>`).join("");
-    $("conf-button").textContent = CONFERENCE.button;
-    if (CONFERENCE.link) $("conf-link").href = CONFERENCE.link;
-    else $("conf-link").style.display = "none";
   }
 
   /* ---------- VIDEO PLAYER ----------
