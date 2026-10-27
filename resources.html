@@ -110,14 +110,14 @@
     /* 16:9 via padding (not aspect-ratio): iPhone/WebKit collapses aspect-ratio boxes inside this grid. */
     .player { position: relative; height: 0; padding-top: 56.25%; align-self: start; background: #000; border: 1px solid var(--gold-border); overflow: hidden; scroll-margin-top: 90px; user-select: none; }
     .player-media, .player-media iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    /* Sits over the video so clicks never reach the embedded player's own links. */
-    .player-shield { position: absolute; inset: 0; z-index: 2; background: transparent; border: 0; cursor: pointer; }
     .player-cover {
       position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
       background: linear-gradient(180deg, rgba(5,8,16,0.55), rgba(5,8,16,0.85)), url("assets/gate-bg.jpg") center / cover no-repeat;
       cursor: pointer; transition: opacity 0.25s;
     }
-    .player.is-playing .player-cover { opacity: 0; pointer-events: none; }
+    /* After the first play, YouTube's own controls take over (CC, speed, full screen). */
+    .player.is-started .player-cover { opacity: 0; pointer-events: none; }
+    .player.is-ended .player-cover { opacity: 1; pointer-events: auto; }
     /* Session thumbnail as the cover; the art carries its own title. */
     .player-cover.has-poster { background-position: center; background-size: cover; background-repeat: no-repeat; justify-content: center; }
     .player-cover.has-poster::before { content: ""; position: absolute; inset: 0; background: rgba(5,8,16,0); transition: background 0.25s; }
@@ -136,32 +136,13 @@
     .player-cover-note { font-family: var(--font-title); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-light); min-height: 14px; text-align: center; padding: 0 20px; }
     .player.is-loading .player-big { animation: pulse 1s ease-in-out infinite; }
     @keyframes pulse { 50% { opacity: 0.45; } }
-    .player-bar {
-      position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
-      display: flex; align-items: center; gap: 12px; padding: 26px 14px 10px;
-      background: linear-gradient(180deg, transparent, rgba(5,8,16,0.92));
-      opacity: 0; transition: opacity 0.25s;
-    }
-    .player.is-started .player-bar { opacity: 1; }
-    .player.is-playing.is-idle .player-bar { opacity: 0; }
-    .player-btn {
-      background: none; border: 0; color: var(--text); cursor: pointer; font: inherit;
-      font-size: 13px; font-weight: 600; min-width: 30px; height: 30px; padding: 0 4px;
-      display: inline-flex; align-items: center; justify-content: center;
-    }
-    .player-btn:hover { color: var(--gold-light); }
-    .player-btn svg { width: 20px; height: 20px; fill: currentColor; }
-    .player-time { font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .player-seek { flex: 1; min-width: 40px; accent-color: var(--gold); cursor: pointer; height: 4px; }
     /* Fallback when the browser blocked our play button: let taps reach the video itself. */
-    .player.needs-tap .player-cover, .player.needs-tap .player-shield { opacity: 0; pointer-events: none; }
-    .player:fullscreen { border: 0; height: 100%; padding-top: 0; }
+    .player.needs-tap .player-cover { opacity: 0; pointer-events: none; }
     .video-soon {
       position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       font-family: var(--font-title); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-secondary);
     }
     .video-soon span { font-size: 30px; color: var(--gold); letter-spacing: 0; }
-    @media (max-width: 560px) { .player-time .player-dur, .player-speed { display: none; } .player-bar { gap: 6px; } }
 
     .block-label { font-family: var(--font-title); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: block; }
     /* height:0 + min-height:100% keeps the list as tall as the video, scrolling inside. */
@@ -337,8 +318,6 @@
       .player-cover { gap: 12px; }
       .player-cover-title { font-size: 20px; }
       .player-cover-note { font-size: 10px; letter-spacing: 0.2em; }
-      .player-btn { min-width: 40px; height: 40px; }
-      .player-bar { padding: 22px 8px 4px; }
       .notice-skip { padding: 12px 0; }
       .session-notice { padding: 6px 16px; margin-top: 0; }
       .site-cta .hotel-form-link { display: inline-block; padding: 12px 0; }
@@ -439,7 +418,7 @@
     <span class="section-label">The Sessions</span>
     <h2 class="section-title">Watch &amp; Review</h2>
     <div class="section-divider"></div>
-    <p class="session-summary" style="margin:0">Click any time code to jump to that point in the video. Download the audio, plus transcripts and notes in English and Spanish.</p>
+    <p class="session-summary" style="margin:0">Click any time code to jump to that point in the video. Use the CC button in the player for captions. Download the audio, plus transcripts and notes in English and Spanish.</p>
     <div id="session-list"></div>
   </div>
 </section>
@@ -750,19 +729,10 @@
       const n = i + 1;
       const video = videoId(s.video)
         ? `<div class="player-media"><div id="yt-${n}"></div></div>
-           <button type="button" class="player-shield" data-act="toggle" aria-label="Play or pause"></button>
-           <div class="player-cover${s.poster ? " has-poster" : ""}" data-act="toggle"${s.poster ? ` style="background-image:url('${esc(s.poster)}')"` : ""}>
+           <div class="player-cover${s.poster ? " has-poster" : ""}" role="button" tabindex="0" aria-label="Play ${esc(s.title)}"${s.poster ? ` style="background-image:url('${esc(s.poster)}')"` : ""}>
              <div class="player-big" aria-hidden="true">&#9654;</div>
              ${s.poster ? "" : `<div class="player-cover-title">${esc(s.title)}</div>`}
              <div class="player-cover-note"></div>
-           </div>
-           <div class="player-bar">
-             <button type="button" class="player-btn" data-act="toggle" aria-label="Play or pause">${ICONS.play}</button>
-             <span class="player-time"><span class="player-cur">0:00</span><span class="player-dur"> / 0:00</span></span>
-             <input class="player-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek">
-             <button type="button" class="player-btn player-speed" data-act="speed" aria-label="Playback speed">1&times;</button>
-             <button type="button" class="player-btn" data-act="mute" aria-label="Mute">${ICONS.sound}</button>
-             <button type="button" class="player-btn player-fs" data-act="fullscreen" aria-label="Full screen">${ICONS.full}</button>
            </div>`
         : `<div class="video-soon"><span>&#9654;</span>Video Coming Soon</div>`;
       const chapters = s.timecodes && s.timecodes.length
@@ -817,9 +787,6 @@
         </article>`;
     }).join("");
 
-    const root = document.documentElement;
-    if (!root.requestFullscreen && !root.webkitRequestFullscreen) document.querySelectorAll(".player-fs").forEach(x => x.remove());
-
     $("avail-list").innerHTML = RESOURCES.items.map(g =>
       `<li><strong>${esc(g.title)}</strong><span>${esc(g.description)}</span></li>`).join("");
     $("res-link").href = $("res-url").href = RESOURCES.link;
@@ -830,16 +797,8 @@
   }
 
   /* ---------- VIDEO PLAYER ----------
-     Plays the hosted video behind our own cover and controls, so viewers see this
-     page's player, not the host's branding, title, or "watch on" links. */
-  const ICONS = {
-    play:  '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
-    pause: '<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>',
-    sound: '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg>',
-    muted: '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm18.3-.3-1.4-1.4L17.6 9.6 15.3 7.3l-1.4 1.4 2.3 2.3-2.3 2.3 1.4 1.4 2.3-2.3 2.3 2.3 1.4-1.4-2.3-2.3z"/></svg>',
-    full:  '<svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5zm9 0h5v5h-2V7h-3zM5 14h2v3h3v2H5zm12 3v-3h2v5h-5v-2z"/></svg>'
-  };
-  const SPEEDS = [1, 1.25, 1.5, 2];
+     Shows the session thumbnail as a cover, then hands off to YouTube's own controls
+     after the first tap so viewers get captions (CC), speed, quality, and full screen. */
   const players = {};
   const fmt = t => {
     t = Math.max(0, Math.floor(t || 0));
@@ -859,20 +818,19 @@
         const id = videoId(s.video);
         if (!id) return;
         const n = i + 1, el = $(`video-${n}`);
-        const state = players[n] = { el, ready: false, pending: null, timer: null, speed: 0 };
+        const state = players[n] = { el, ready: false, pending: null };
         state.yt = new YT.Player(`yt-${n}`, {
           videoId: id,
           host: "https://www.youtube-nocookie.com",
-          playerVars: { controls: 0, rel: 0, playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3, cc_load_policy: 0, origin: location.origin },
+          playerVars: { controls: 1, rel: 0, playsinline: 1, fs: 1, iv_load_policy: 3, origin: location.origin },
           events: {
             onReady: () => {
               state.ready = true;
-              el.querySelector("iframe").setAttribute("tabindex", "-1");
               if (state.pending !== null) { const t = state.pending; state.pending = null; seek(n, t); }
             },
             onStateChange: e => onState(n, e.data),
             onError: () => {
-              el.classList.remove("is-loading", "is-playing");
+              el.classList.remove("is-loading", "is-started");
               el.querySelector(".player-cover-note").textContent = "This video is not available yet. Please check back soon.";
             }
           }
@@ -884,38 +842,26 @@
     document.head.appendChild(tag);
   }
 
+  // YouTube states: -1 unstarted, 0 ended, 1 playing, 2 paused, 3 buffering, 5 cued.
   function onState(n, code) {
     const p = players[n], el = p.el;
-    const playing = code === 1;
-    el.classList.toggle("is-playing", playing);
-    if (playing) {
-      el.classList.remove("is-loading", "needs-tap");
+    if (code === 1) {
+      el.classList.remove("is-loading", "needs-tap", "is-ended");
       clearTimeout(p.tapTimer);
       if (!el.classList.contains("is-started")) track("Video Play", { session: SESSIONS[n - 1].title });
       el.classList.add("is-started");
     }
-    if (code === 0) { el.querySelector(".player-cover-note").textContent = "Watch again"; }
-    else if (code === 1 || code === 2) el.querySelector(".player-cover-note").textContent = code === 2 ? "Paused" : "";
-    el.querySelector('.player-bar [data-act="toggle"]').innerHTML = playing ? ICONS.pause : ICONS.play;
-    clearInterval(p.timer);
-    if (playing) p.timer = setInterval(() => tick(n), 250);
-    tick(n);
-  }
-
-  function tick(n) {
-    const p = players[n];
-    if (!p.ready) return;
-    const cur = p.yt.getCurrentTime(), dur = p.yt.getDuration();
-    p.el.querySelector(".player-cur").textContent = fmt(cur);
-    p.el.querySelector(".player-dur").textContent = " / " + fmt(dur);
-    const seekBar = p.el.querySelector(".player-seek");
-    if (!seekBar.matches(":active")) seekBar.value = dur ? Math.round(cur / dur * 1000) : 0;
+    if (code === 0) {
+      el.classList.add("is-ended");
+      el.querySelector(".player-cover-note").textContent = "Watch again";
+    }
   }
 
   function play(n) {
     const p = players[n];
     if (!p) return;
     p.el.querySelector(".player-cover-note").textContent = "";
+    p.el.classList.remove("is-ended");
     p.el.classList.add("is-loading");
     if (p.ready) p.yt.playVideo();
     // Safety net: some phones (iPhone) block starting the video from our button.
@@ -937,26 +883,6 @@
     if (!p.ready) { p.pending = seconds; p.el.classList.add("is-loading"); return; }
     p.yt.seekTo(seconds, true);
     play(n);
-    tick(n);
-  }
-
-  function act(n, what, btn) {
-    const p = players[n];
-    if (!p || !p.ready) { if (what === "toggle") play(n); return; }
-    if (what === "toggle") {
-      if (p.yt.getPlayerState() === 1) p.yt.pauseVideo(); else play(n);
-    } else if (what === "mute") {
-      if (p.yt.isMuted()) { p.yt.unMute(); btn.innerHTML = ICONS.sound; }
-      else { p.yt.mute(); btn.innerHTML = ICONS.muted; }
-    } else if (what === "speed") {
-      p.speed = (p.speed + 1) % SPEEDS.length;
-      p.yt.setPlaybackRate(SPEEDS[p.speed]);
-      btn.textContent = SPEEDS[p.speed] + "\u00d7";
-    } else if (what === "fullscreen") {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else if (p.el.requestFullscreen) p.el.requestFullscreen();
-      else if (p.el.webkitRequestFullscreen) p.el.webkitRequestFullscreen();
-    }
   }
 
   document.addEventListener("click", e => {
@@ -972,23 +898,12 @@
     if (dl) track("Download", { session: dl.dataset.trackSession, file: dl.dataset.trackFile, item: `${dl.dataset.trackSession}: ${dl.dataset.trackFile}` });
     const link = e.target.closest("[data-track-link]");
     if (link) track(link.dataset.trackLink);
-    const control = e.target.closest(".player [data-act]");
-    if (control) act(control.closest(".player").dataset.session, control.dataset.act, control);
+    const cover = e.target.closest(".player-cover");
+    if (cover) play(cover.closest(".player").dataset.session);
   });
-  document.addEventListener("input", e => {
-    if (!e.target.matches(".player-seek")) return;
-    const n = e.target.closest(".player").dataset.session, p = players[n];
-    if (p && p.ready) p.yt.seekTo(e.target.value / 1000 * p.yt.getDuration(), true);
-  });
-  // Block the right-click menu on the video area.
-  document.addEventListener("contextmenu", e => { if (e.target.closest(".player")) e.preventDefault(); });
-  // Hide the control bar after a few seconds without mouse movement.
-  document.addEventListener("mousemove", e => {
-    const el = e.target.closest(".player");
-    if (!el) return;
-    el.classList.remove("is-idle");
-    clearTimeout(el._idle);
-    el._idle = setTimeout(() => el.classList.add("is-idle"), 2500);
+  document.addEventListener("keydown", e => {
+    const cover = e.target.closest && e.target.closest(".player-cover");
+    if (cover && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); play(cover.closest(".player").dataset.session); }
   });
 
   /* ---------- GATE ---------- */
