@@ -93,7 +93,6 @@
       padding: 44px; margin-top: 48px; scroll-margin-top: 90px;
     }
     .session-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; }
-    .session-num { font-family: var(--font-title); font-size: 12px; letter-spacing: 0.32em; color: var(--gold); text-transform: uppercase; }
     .session-title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 42px); font-weight: 500; line-height: 1.1; }
     .session-summary { color: var(--text-secondary); font-size: 16px; line-height: 1.75; max-width: 760px; margin: 10px 0 28px; }
 
@@ -469,8 +468,8 @@
      ========================================================== */
   const SESSIONS = [
     {
-      title: "Session One",
-      summary: "Add a one or two sentence summary of this session.",
+      title: "Session 1",
+      summary: "",
       video: "https://www.youtube.com/watch?v=yXfNK1LfEXs",
       timecodes: [
         { time: "0:00:00", label: "Why this day exists: a thank-you text to four bishops" },
@@ -492,8 +491,8 @@
       notes: []
     },
     {
-      title: "Session Two",
-      summary: "Add a one or two sentence summary of this session.",
+      title: "Session 2",
+      summary: "",
       video: "https://www.youtube.com/watch?v=ND2wxWnIkVs",
       timecodes: [
         { time: "0:00:00", label: "The question: an established church that won't move forward" },
@@ -512,8 +511,8 @@
       notes: []
     },
     {
-      title: "Session Three",
-      summary: "Add a one or two sentence summary of this session.",
+      title: "Session 3",
+      summary: "",
       video: "https://www.youtube.com/watch?v=F8aH4t50yDc",
       timecodes: [
         { time: "0:01:49", label: "Takeaways from the room; every decision is symbolic" },
@@ -563,7 +562,7 @@
   /* ---------- PAGE CONTENT ---------- */
   function renderContent() {
     $("res-jump").innerHTML = SESSIONS.map((s, i) =>
-      `<a href="#session-${i + 1}">${pad(i + 1)} &middot; ${esc(s.title)}</a>`).join("") +
+      `<a href="#session-${i + 1}">${esc(s.title)}</a>`).join("") +
       `<a href="#resources">Resources</a><a href="#conference">Better Together 2027</a>`;
 
     $("session-list").innerHTML = SESSIONS.map((s, i) => {
@@ -613,10 +612,9 @@
       return `
         <article class="session" id="session-${n}">
           <div class="session-head">
-            <span class="session-num">Session ${pad(n)}</span>
             <h3 class="session-title">${esc(s.title)}</h3>
           </div>
-          <p class="session-summary">${esc(s.summary)}</p>
+          ${s.summary ? `<p class="session-summary">${esc(s.summary)}</p>` : `<div style="height:24px"></div>`}
           <div class="session-media">
             <div class="player" id="video-${n}" data-session="${n}">${video}</div>
             <div class="chapters"><span class="block-label">Jump To</span>${chapters}</div>
