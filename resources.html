@@ -121,14 +121,8 @@
     .player-cover.has-poster { background-position: center; background-size: cover; background-repeat: no-repeat; justify-content: center; }
     .player-cover.has-poster::before { content: ""; position: absolute; inset: 0; background: rgba(5,8,16,0); transition: background 0.25s; }
     .player-cover.has-poster:hover::before { background: rgba(5,8,16,0.15); }
-    /* Bottom center is open space in all three thumbnails (title left, speaker right). */
-    .player-cover.has-poster .player-big {
-      position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%);
-      width: 64px; height: 64px; font-size: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .player-cover.has-poster:hover .player-big { transform: translateX(-50%) scale(1.06); }
-    .player-cover.has-poster .player-cover-note { position: absolute; top: 6%; left: 50%; transform: translateX(-50%); background: rgba(5,8,16,0.8); padding: 6px 12px; white-space: nowrap; }
-    @media (max-width: 768px) { .player-cover.has-poster .player-big { width: 46px; height: 46px; font-size: 17px; bottom: 5%; } }
+    .player-cover.has-poster .player-big { position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
+    .player-cover.has-poster .player-cover-note { position: relative; background: rgba(5,8,16,0.75); padding: 6px 12px; }
     .player-cover.has-poster .player-cover-note:empty { display: none; }
     .player-big {
       width: 84px; height: 84px; border-radius: 50%; border: 1px solid var(--gold);
