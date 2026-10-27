@@ -117,6 +117,19 @@
       cursor: pointer; transition: opacity 0.25s;
     }
     .player.is-playing .player-cover { opacity: 0; pointer-events: none; }
+    /* Session thumbnail as the cover; the art carries its own title. */
+    .player-cover.has-poster { background-position: center; background-size: cover; background-repeat: no-repeat; justify-content: center; }
+    .player-cover.has-poster::before { content: ""; position: absolute; inset: 0; background: rgba(5,8,16,0); transition: background 0.25s; }
+    .player-cover.has-poster:hover::before { background: rgba(5,8,16,0.15); }
+    /* Bottom center is open space in all three thumbnails (title left, speaker right). */
+    .player-cover.has-poster .player-big {
+      position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%);
+      width: 64px; height: 64px; font-size: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .player-cover.has-poster:hover .player-big { transform: translateX(-50%) scale(1.06); }
+    .player-cover.has-poster .player-cover-note { position: absolute; top: 6%; left: 50%; transform: translateX(-50%); background: rgba(5,8,16,0.8); padding: 6px 12px; white-space: nowrap; }
+    @media (max-width: 768px) { .player-cover.has-poster .player-big { width: 46px; height: 46px; font-size: 17px; bottom: 5%; } }
+    .player-cover.has-poster .player-cover-note:empty { display: none; }
     .player-big {
       width: 84px; height: 84px; border-radius: 50%; border: 1px solid var(--gold);
       background: rgba(201,168,76,0.92); color: var(--bg-deep); font-size: 28px;
@@ -568,6 +581,7 @@
 <script>
   /* ==========================================================
      EDIT YOUR CONTENT HERE
+     - poster: the cover image shown before the video plays (16:9).
      - video: paste the full video link. Leave "" to show "Coming Soon".
        Viewers never see the link; the page plays it in its own player.
      - timecodes: { time: "0:12:34", label: "What happens here" }. "1:02:03" for past one hour.
@@ -583,6 +597,7 @@
       title: "Session 1",
       summary: "Dr. Sam Chand shares the surprising story behind this gathering. Then he walks through six simple, two-word questions every church needs to ask. You’ll hear why small churches have an edge in raising leaders. You’ll also learn what to do when one voice in the room holds you back.",
       video: "https://youtu.be/XVVL4igKa8s",
+      poster: "assets/thumbs/session-1.jpg",
       timecodes: [
         { time: "0:00:00", label: "Why this day exists: a thank-you text to four bishops" },
         { time: "0:05:25", label: "Dr. Chand's story: from India with 87 cents" },
@@ -613,6 +628,7 @@
       title: "Session 2",
       summary: "How do you lead a church that doesn’t want to move? Dr. Chand breaks down the five kinds of people who respond to every vision, and shows which ones most pastors listen to by mistake. He also talks honestly about fear, courage, and the kind of friend every pastor needs.",
       video: "https://youtu.be/QqDmcAJdOMg",
+      poster: "assets/thumbs/session-2.jpg",
       timecodes: [
         { time: "0:00:00", label: "The question: an established church that won't move forward" },
         { time: "0:02:45", label: "How to bring people along: 2, 18, 60, 18, 2" },
@@ -641,6 +657,7 @@
       title: "Session 3",
       summary: "Pastors from four denominations name the biggest opportunities ahead. Then Dr. Chand gives the pastor’s job description in three words. He closes with two personal questions every leader must answer, and four words from his mentor that he has never forgotten.",
       video: "https://youtu.be/uZfxgVCTeG0",
+      poster: "assets/thumbs/session-3.jpg",
       timecodes: [
         { time: "0:01:49", label: "Takeaways from the room; every decision is symbolic" },
         { time: "0:05:30", label: "Group exercise: your best opportunities through 2027" },
@@ -737,9 +754,9 @@
       const video = videoId(s.video)
         ? `<div class="player-media"><div id="yt-${n}"></div></div>
            <button type="button" class="player-shield" data-act="toggle" aria-label="Play or pause"></button>
-           <div class="player-cover" data-act="toggle">
+           <div class="player-cover${s.poster ? " has-poster" : ""}" data-act="toggle"${s.poster ? ` style="background-image:url('${esc(s.poster)}')"` : ""}>
              <div class="player-big" aria-hidden="true">&#9654;</div>
-             <div class="player-cover-title">${esc(s.title)}</div>
+             ${s.poster ? "" : `<div class="player-cover-title">${esc(s.title)}</div>`}
              <div class="player-cover-note"></div>
            </div>
            <div class="player-bar">
