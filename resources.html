@@ -357,7 +357,7 @@
       <button class="gate-submit" type="submit" id="gate-submit">Unlock the Resources</button>
     </form>
 
-    <p class="gate-fine">We will only use your information to follow up about this event and future leadership resources.</p>
+    <p class="gate-fine">We use your information to follow up about this event and future leadership resources, and to see which resources are most helpful.</p>
   </div>
 </div>
 
@@ -676,6 +676,15 @@
   function track(name, props) {
     try { if (window.rybbit && window.rybbit.event) window.rybbit.event(name, props); } catch (e) {}
   }
+  // Ties this visitor's activity in Rybbit to the name and email they entered.
+  // Rybbit stores the ID in this browser, so return visits stay identified.
+  function identify(email, first, last, church) {
+    try {
+      if (window.rybbit && window.rybbit.identify) {
+        window.rybbit.identify(email.toLowerCase(), { name: `${first} ${last}`, username: `${first} ${last}`, email, church });
+      }
+    } catch (e) {}
+  }
   const toSeconds = t => String(t).split(":").reduce((sum, part) => sum * 60 + (parseInt(part, 10) || 0), 0);
 
   /* ---------- PAGE CONTENT ---------- */
@@ -711,14 +720,14 @@
         : `<p class="muted">Time codes coming soon.</p>`;
       const d = s.downloads || {};
       const files = [
-        { url: d.audio,        type: "Audio (MP3)",   lang: "Listen",  file: "Audio MP3", size: s.audioSize },
+        { url: d.audio,        type: "Audio (MP3)",   lang: "Listen",  file: "Audio MP3", size: s.audioSize, saveAs: `Sam Chand - ${s.title}.mp3` },
         { url: d.transcriptEn, type: "Transcript",    lang: "English", file: "Transcript (English)" },
         { url: d.transcriptEs, type: "Transcripción", lang: "Español", file: "Transcript (Spanish)" },
         { url: d.notesEn,      type: "Notes",         lang: "English", file: "Notes (English)" },
         { url: d.notesEs,      type: "Notas",         lang: "Español", file: "Notes (Spanish)" }
       ];
       const downloads = files.map(f => f.url
-        ? `<a class="download" href="${esc(driveDownload(f.url))}" download data-track-session="${esc(s.title)}" data-track-file="${f.file}">
+        ? `<a class="download" href="${esc(driveDownload(f.url))}" download="${esc(f.saveAs || "")}" data-track-session="${esc(s.title)}" data-track-file="${f.file}">
              <span class="download-lang">${f.lang}</span><span class="download-type">${f.type}</span>
              <span class="download-action">${f.lang === "Español" ? "Descargar" : "Download"}${f.size ? ` &middot; ${esc(f.size)}` : ""} &darr;</span></a>`
         : `<div class="download is-soon">
@@ -974,6 +983,7 @@
     button.textContent = "Unlocking...";
     try {
       await fetch(`https://submit.jotform.com/submit/${JOTFORM_ID}`, { method: "POST", mode: "no-cors", body: data });
+      identify(email.value.trim(), first.value.trim(), last.value.trim(), church.value.trim());
       track("Unlocked Page");
       rememberAccess();
       unlock();
