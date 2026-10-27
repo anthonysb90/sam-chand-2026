@@ -107,7 +107,8 @@
     }
     .notice-skip:hover { color: var(--gold-light); }
     .session-media { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: stretch; }
-    .player { position: relative; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--gold-border); overflow: hidden; scroll-margin-top: 90px; user-select: none; }
+    /* 16:9 via padding (not aspect-ratio): iPhone/WebKit collapses aspect-ratio boxes inside this grid. */
+    .player { position: relative; height: 0; padding-top: 56.25%; align-self: start; background: #000; border: 1px solid var(--gold-border); overflow: hidden; scroll-margin-top: 90px; user-select: none; }
     .player-media, .player-media iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     /* Sits over the video so clicks never reach the embedded player's own links. */
     .player-shield { position: absolute; inset: 0; z-index: 2; background: transparent; border: 0; cursor: pointer; }
@@ -152,7 +153,9 @@
     .player-btn svg { width: 20px; height: 20px; fill: currentColor; }
     .player-time { font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .player-seek { flex: 1; min-width: 40px; accent-color: var(--gold); cursor: pointer; height: 4px; }
-    .player:fullscreen { border: 0; aspect-ratio: auto; }
+    /* Fallback when the browser blocked our play button: let taps reach the video itself. */
+    .player.needs-tap .player-cover, .player.needs-tap .player-shield { opacity: 0; pointer-events: none; }
+    .player:fullscreen { border: 0; height: 100%; padding-top: 0; }
     .video-soon {
       position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       font-family: var(--font-title); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-secondary);
@@ -886,7 +889,8 @@
     const playing = code === 1;
     el.classList.toggle("is-playing", playing);
     if (playing) {
-      el.classList.remove("is-loading");
+      el.classList.remove("is-loading", "needs-tap");
+      clearTimeout(p.tapTimer);
       if (!el.classList.contains("is-started")) track("Video Play", { session: SESSIONS[n - 1].title });
       el.classList.add("is-started");
     }
@@ -914,6 +918,15 @@
     p.el.querySelector(".player-cover-note").textContent = "";
     p.el.classList.add("is-loading");
     if (p.ready) p.yt.playVideo();
+    // Safety net: some phones (iPhone) block starting the video from our button.
+    // If it hasn't started in 3 seconds, step aside so the next tap hits the video itself.
+    clearTimeout(p.tapTimer);
+    p.tapTimer = setTimeout(() => {
+      if (p.ready && p.yt.getPlayerState() !== 1) {
+        p.el.classList.remove("is-loading");
+        p.el.classList.add("needs-tap");
+      }
+    }, 3000);
   }
 
   function seek(n, seconds) {
