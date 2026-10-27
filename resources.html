@@ -558,6 +558,9 @@
         </article>`;
     }).join("");
 
+    const root = document.documentElement;
+    if (!root.requestFullscreen && !root.webkitRequestFullscreen) document.querySelectorAll(".player-fs").forEach(x => x.remove());
+
     $("avail-list").innerHTML = RESOURCES.items.map(g =>
       `<li><strong>${esc(g.title)}</strong><span>${esc(g.description)}</span></li>`).join("");
     $("res-link").href = $("res-url").href = RESOURCES.link;
