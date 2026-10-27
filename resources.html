@@ -71,8 +71,8 @@
     .res-hero {
       position: relative; padding: 170px 24px 90px; text-align: center; overflow: hidden;
       background:
-        linear-gradient(180deg, rgba(5,8,16,0.7) 0%, rgba(5,8,16,0.92) 75%, var(--bg-deep) 100%),
-        url("assets/gallery-2.jpg") center 40% / cover no-repeat;
+        linear-gradient(180deg, rgba(5,8,16,0.58) 0%, rgba(5,8,16,0.72) 55%, rgba(5,8,16,0.94) 85%, var(--bg-deep) 100%),
+        url("assets/hero-bg.jpg") center 35% / cover no-repeat;
     }
     .res-hero .hero-title-main { font-size: clamp(54px, 10vw, 112px); }
     .res-hero .hero-divider { margin: 22px auto; width: 80px; }
@@ -411,7 +411,7 @@
   <div class="nav-links" id="nav-links">
     <a href="#sessions" class="nav-link">Sessions</a>
     <a href="#resources" class="nav-link">Resources</a>
-    <a href="#thanks" class="nav-link">Photos</a>
+    <a href="https://drive.google.com/drive/folders/1bHUYrwxscRvlY7f5p4rRxtNYhdfCd8IL" class="nav-link" target="_blank" rel="noopener" data-track-link="View Event Photos">Photos</a>
     <a href="#conference" class="nav-link">Better Together</a>
   </div>
   <div class="nav-right">
@@ -741,7 +741,7 @@
   function renderContent() {
     $("res-jump").innerHTML = SESSIONS.map((s, i) =>
       `<a href="#session-${i + 1}">${esc(s.title)}</a>`).join("") +
-      `<a href="#resources">Resources</a><a href="#thanks">Photos</a><a href="#conference">Better Together 2027</a>`;
+      `<a href="#resources">Resources</a><a href="${PHOTOS_LINK}" target="_blank" rel="noopener" data-track-link="View Event Photos">Photos</a><a href="#conference">Better Together 2027</a>`;
 
     $("session-list").innerHTML = SESSIONS.map((s, i) => {
       const n = i + 1;
