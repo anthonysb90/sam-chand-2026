@@ -919,14 +919,16 @@
     p.el.classList.add("is-loading");
     if (p.ready) p.yt.playVideo();
     // Safety net: some phones (iPhone) block starting the video from our button.
-    // If it hasn't started in 3 seconds, step aside so the next tap hits the video itself.
+    // Only step aside if the player never even began loading (still "unstarted" or "cued").
+    // If it's buffering, the play was accepted and a slow connection just needs more time.
     clearTimeout(p.tapTimer);
     p.tapTimer = setTimeout(() => {
-      if (p.ready && p.yt.getPlayerState() !== 1) {
+      const state = p.ready ? p.yt.getPlayerState() : -1;
+      if (p.ready && (state === -1 || state === 5)) {
         p.el.classList.remove("is-loading");
         p.el.classList.add("needs-tap");
       }
-    }, 3000);
+    }, 4000);
   }
 
   function seek(n, seconds) {
