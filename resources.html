@@ -97,7 +97,7 @@
     .session-title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 42px); font-weight: 500; line-height: 1.1; }
     .session-summary { color: var(--text-secondary); font-size: 16px; line-height: 1.75; max-width: 760px; margin: 10px 0 28px; }
 
-    .session-media { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+    .session-media { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: stretch; }
     .player { position: relative; aspect-ratio: 16 / 9; background: #000; border: 1px solid var(--gold-border); overflow: hidden; scroll-margin-top: 90px; user-select: none; }
     .player-media, .player-media iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     /* Sits over the video so clicks never reach the embedded player's own links. */
@@ -145,9 +145,10 @@
     @media (max-width: 560px) { .player-time .player-dur, .player-speed { display: none; } .player-bar { gap: 6px; } }
 
     .block-label { font-family: var(--font-title); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: block; }
-    .chapters { border: 1px solid var(--gold-border); background: var(--bg-deep); padding: 18px 0 8px; }
+    /* height:0 + min-height:100% keeps the list as tall as the video, scrolling inside. */
+    .chapters { border: 1px solid var(--gold-border); background: var(--bg-deep); padding: 18px 0 0; height: 0; min-height: 100%; display: flex; flex-direction: column; }
     .chapters .block-label { padding: 0 18px; }
-    .chapter-list { list-style: none; max-height: 340px; overflow-y: auto; }
+    .chapter-list { list-style: none; flex: 1; overflow-y: auto; }
     .chapter-btn {
       width: 100%; display: flex; gap: 14px; align-items: baseline; text-align: left;
       background: none; border: none; border-top: 1px solid rgba(201,168,76,0.08);
@@ -243,7 +244,8 @@
       .avail { grid-template-columns: 1fr; padding: 40px 32px; }
       .download-grid > :first-child { grid-column: 1 / -1; }
       .session-media { grid-template-columns: 1fr; }
-      .chapter-list { max-height: 260px; }
+      .chapters { height: auto; min-height: 0; }
+      .chapter-list { flex: none; max-height: 300px; }
     }
     @media (max-width: 768px) {
       .session { padding: 26px 18px; }
@@ -425,7 +427,7 @@
      EDIT YOUR CONTENT HERE
      - video: paste the full video link. Leave "" to show "Coming Soon".
        Viewers never see the link; the page plays it in its own player.
-     - timecodes: { time: "12:34", label: "What happens here" }. Use "1:02:03" past one hour.
+     - timecodes: { time: "0:12:34", label: "What happens here" }. "1:02:03" for past one hour.
      - downloads: paste a link to each file (audio = the MP3; Google Drive, Dropbox, or a file in /assets).
        Leave "" and the button shows "Coming Soon".
      - notes: optional key takeaways shown on the page. Leave [] to hide.
@@ -436,8 +438,20 @@
       summary: "Add a one or two sentence summary of this session.",
       video: "https://www.youtube.com/watch?v=yXfNK1LfEXs",
       timecodes: [
-        // { time: "0:00",  label: "Welcome and opening" },
-        // { time: "12:30", label: "Point one" },
+        { time: "0:00:00", label: "Why this day exists: a thank-you text to four bishops" },
+        { time: "0:05:25", label: "Dr. Chand's story: from India with 87 cents" },
+        { time: "0:08:07", label: "Your past has no relationship to your future" },
+        { time: "0:14:14", label: "Your numbers change, your issues stay the same" },
+        { time: "0:16:55", label: "Small churches raise and send leaders" },
+        { time: "0:28:35", label: "Question 1: What was?" },
+        { time: "0:30:41", label: "Volunteers vs. recruiting" },
+        { time: "0:40:06", label: "Jesus never asked for volunteers" },
+        { time: "0:46:44", label: "Question 2: What is? Every obstacle holds an opportunity" },
+        { time: "1:03:28", label: "Meeting Benson: you can raise an army" },
+        { time: "1:05:41", label: "Question 3: What if? Start, stop, suspend, sustain, speed" },
+        { time: "1:14:14", label: "Question 4: Even if? Counting the cost" },
+        { time: "1:23:33", label: "Question 5: What now? Who does what by when" },
+        { time: "1:26:11", label: "Question 6: Who knew? and review" }
       ],
       downloads: { audio: "", transcriptEn: "", transcriptEs: "", notesEn: "", notesEs: "" },
       notes: []
@@ -446,7 +460,19 @@
       title: "Session Two",
       summary: "Add a one or two sentence summary of this session.",
       video: "https://www.youtube.com/watch?v=ND2wxWnIkVs",
-      timecodes: [],
+      timecodes: [
+        { time: "0:00:00", label: "The question: an established church that won't move forward" },
+        { time: "0:02:45", label: "How to bring people along: 2, 18, 60, 18, 2" },
+        { time: "0:09:46", label: "Why we decide based on the bottom 20%" },
+        { time: "0:11:43", label: "Make a written list of your top 20%" },
+        { time: "0:13:56", label: "Don't talk people into staying; Bless and Release" },
+        { time: "0:18:57", label: "The 60%: looking for leadership, authority-resistant" },
+        { time: "0:24:56", label: "Fear is real; courage and the ten-year mirror" },
+        { time: "0:30:26", label: "Yellow-light moments and wise counsel" },
+        { time: "0:36:05", label: "How Jesus led: the 3, the 12, the 70, the crowd" },
+        { time: "0:41:36", label: "Friends who celebrate you; pain partners" },
+        { time: "0:46:24", label: "Don't let the bottom 20% control the 80%" }
+      ],
       downloads: { audio: "", transcriptEn: "", transcriptEs: "", notesEn: "", notesEs: "" },
       notes: []
     },
@@ -454,7 +480,23 @@
       title: "Session Three",
       summary: "Add a one or two sentence summary of this session.",
       video: "https://www.youtube.com/watch?v=F8aH4t50yDc",
-      timecodes: [],
+      timecodes: [
+        { time: "0:01:49", label: "Takeaways from the room; every decision is symbolic" },
+        { time: "0:05:30", label: "Group exercise: your best opportunities through 2027" },
+        { time: "0:14:47", label: "Pastors' wives and building community" },
+        { time: "0:26:47", label: "Free resources from Dr. Chand" },
+        { time: "0:31:26", label: "What flourishing churches had in common during COVID" },
+        { time: "0:40:52", label: "A spirit of generosity" },
+        { time: "0:46:01", label: "Your top 20 list: pray, text, take them to lunch" },
+        { time: "0:54:09", label: "Discover, develop, deploy: your job description" },
+        { time: "0:55:52", label: "Pastor Tom Grinder's tap on the shoulder" },
+        { time: "1:09:20", label: "Task, team, title" },
+        { time: "1:13:56", label: "Develop: training vs. development; how Jesus did it" },
+        { time: "1:19:18", label: "Deploy" },
+        { time: "1:20:42", label: "Two questions: How's your marriage? How's your money?" },
+        { time: "1:29:40", label: "Be well when you finish" },
+        { time: "1:34:31", label: "Hard work, heart work, homework" }
+      ],
       downloads: { audio: "", transcriptEn: "", transcriptEs: "", notesEn: "", notesEs: "" },
       notes: []
     }
@@ -520,7 +562,7 @@
       const chapters = s.timecodes && s.timecodes.length
         ? `<ol class="chapter-list">${s.timecodes.map(c =>
             `<li><button type="button" class="chapter-btn" data-session="${n}" data-seconds="${toSeconds(c.time)}">
-               <span class="chapter-time">${esc(c.time)}</span><span class="chapter-label">${esc(c.label)}</span>
+               <span class="chapter-time">${fmt(toSeconds(c.time))}</span><span class="chapter-label">${esc(c.label)}</span>
              </button></li>`).join("")}</ol>`
         : `<p class="muted">Time codes coming soon.</p>`;
       const d = s.downloads || {};
